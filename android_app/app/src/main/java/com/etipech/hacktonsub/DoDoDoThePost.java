@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -23,29 +26,29 @@ public class DoDoDoThePost extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_do_do_do_the_post);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        TextView textView = findViewById(R.id.textView);
+        String res;
 
         nwAsync = new NetworkAsyncTask();
         Bundle b = getIntent().getExtras();
         String email = b.getString("email");
-        String restaurant = b.getString("restaurant");
+        String storeNumber = b.getString("storeNumber");
         String mark = b.getString("mark");
         String ticket = b.getString("ticket");
 
         System.out.println(email);
-        System.out.println(restaurant);
+        System.out.println(storeNumber);
         System.out.println(mark);
         System.out.println(ticket);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
-        nwAsync.execute(email, restaurant, mark, ticket);
+        try {
+            res = nwAsync.execute(email, storeNumber, mark, ticket).get();
+            textView.setText(res);
+        }catch (Exception e) {
+            //TODO
+        }
+
     }
 }
