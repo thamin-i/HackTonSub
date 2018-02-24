@@ -6,7 +6,6 @@ from urllib.parse import parse_qs
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 class Serv(BaseHTTPRequestHandler):
-    ocr = pyocr.get_available_tools()[0]
     def send(self, msg, code=200):
         if not isinstance(msg, bytes):
             if not isinstance(msg, str):

@@ -14,14 +14,14 @@ class JoliSoup(BeautifulSoup):
         ltxt = txt.lower()
         obj = soup.html.body.find_all(recursive=False)[0]
         def get_old_case(s, before='', after=''):
-            match = re.compile(f'{before}{s}{after}').search(ltxt)
+            match = re.compile('{}{}{}'.format(before, s, after)).search(ltxt)
             if match is None:
-                raise RuntimeError(f'"{s}" not found in soup')
+                raise RuntimeError('"{}" not found in soup'.format(s))
             begin, end = match.span()
             zone = txt[begin:end]
             idx = zone.lower().index(s)
             if idx < 0:
-                raise RuntimeError(f'"{s}" not found in soup')
+                raise RuntimeError('"{}" not found in soup'.format(s))
             return zone[idx:len(before)+len(s)]
 
         old_tags = {}
@@ -63,7 +63,10 @@ class Cooker(http.client.HTTPSConnection):
         headers = { k:v for k,v in headers.items() }
         handle_cookie = not 'Cookie' in headers
         if handle_cookie:
-            headers['Cookie'] = '; '.join((f'{key}={value}' for key, value in self.cookies.items()))
+            headers['Cookie'] = '; '.join((
+                '{}={}'.format(key, value)
+                for key, value in self.cookies.items()
+            ))
         if isinstance(body, dict):
             body = UrlArgs.dict2args(body)
         super().request(method, url, body, headers)

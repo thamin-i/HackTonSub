@@ -41,10 +41,10 @@ class Form:
 
     def __init__(self, storeId, eat_questions, grade_questions):
         try:
-            with open(f'sample/{storeId}.post', 'r') as f:
+            with open('sample/{}.post'.format(storeId), 'r') as f:
                 dummy_post = f.read()
         except FileNotFoundError as e:
-            raise RuntimeError(f'Invalid store "{storeId}"')
+            raise RuntimeError('Invalid store "{}"'.format(storeId))
         self.args = UrlArgs.args2dict(dummy_post)
         self.soup = JoliSoup(self.args['submitSet'])
         self.url, args = self.soup['URL'].split('?')
@@ -90,7 +90,7 @@ class Form:
         self._set_by_type('DATETIME_CALENDAR_PICKER', past)
         self.soup['clientDate'] = now
         self.soup['receiptDate'] = past
-        self.soup['URL'] = f'{self.url}?{UrlArgs.dict2args(self.url_args)}'
+        self.soup['URL'] = '{}?{}'.format(self.url, UrlArgs.dict2args(self.url_args))
         self.args['submitSet'] = str(self.soup)
         return UrlArgs.dict2args(self.args)
 
@@ -148,10 +148,10 @@ class ApiHandler:
         self.storeId = d['storeId']
         resp = self.conn.request(
             'GET',
-            "/WebServices/CE/survey.asmx/GetSurveyById?"
-            f"surveyId={self.surveyId}&"
-            f"storeId={self.storeId}&"
-            f"sid={self.sid}",
+            "/WebServices/CE/survey.asmx/GetSurveyById?" +
+            "surveyId={}&".format(self.surveyId) +
+            "storeId={}&".format(self.storeId) +
+            "sid={}".format(self.sid),
             decode=JoliSoup
         )
         return json.loads(resp.data.string)
@@ -175,7 +175,7 @@ class ApiHandler:
         txt = resp.data.Description.text
         if resp.data.Status.text != 'OK':
             raise RuntimeError(txt)
-        resp = self.conn.request('POST', f'/ContentManager/{txt}')
+        resp = self.conn.request('POST', '/ContentManager/{}'.format(txt))
         return resp.data.split(b'<span id="ctl03_lblTag">')[1].split(b'</span>')[0].strip().decode()
 
     def close(self):
