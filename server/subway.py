@@ -40,10 +40,11 @@ class Form:
             question.fill(self.soup, int(value))
 
     def __init__(self, storeId, eat_questions, grade_questions):
-
-        with open(f'sample/{storeId}.post', 'r') as f:
-            dummy_post = f.read()
-        
+        try:
+            with open(f'sample/{storeId}.post', 'r') as f:
+                dummy_post = f.read()
+        except FileNotFoundError as e:
+            raise RuntimeError(f'Invalid store "{storeId}"')
         self.args = UrlArgs.args2dict(dummy_post)
         self.soup = JoliSoup(self.args['submitSet'])
         self.url, args = self.soup['URL'].split('?')
@@ -51,7 +52,6 @@ class Form:
         self.eat_questions = eat_questions
         self.grade_questions = grade_questions
         self.now = datetime.datetime.now()
-
         self._set_by_type('STORE_ID', storeId)
         self.soup['storeId'] = storeId
         self.url_args['storeId'] = storeId
