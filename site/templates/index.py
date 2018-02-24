@@ -43,13 +43,15 @@ def main():
 $(function() {
 $('#button').click(function() {
       $.ajax ({
-      url:'http://10.15.192.243:4242',
-      data: $('form').serialize(),
+      url:'http://10.15.192.243:8080',
+      data: $('form').serializeArray(),
       type: 'POST',
       success: function(response) {
-      console.log("finish")
+          Materialize.toast(response, 100000, 'green')
       },
-      error: function(response) {}
+      error: function(response) {
+          Materialize.toast("error", 3000, 'red')
+}
       });
 });
 });
@@ -61,17 +63,3 @@ $('#button').click(function() {
 </html>
 """
     return ret
-
-  # $.ajax({
-  #       url: 'http://10.15.192.243:4242',
-  #       data: $('form').serializeArray(),
-  #       type: 'POST',
-  #       success: function(response) {
-  #       alert("OK")
-  #       },
-  #       error: function(error) {
-  #       alert("KO")
-  #       }
-  #       });
-  #       });
-  #       });
