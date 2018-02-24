@@ -2,6 +2,7 @@
 
 import ssl
 import json
+import pytz
 import random
 import datetime
 import http.client
@@ -51,7 +52,7 @@ class Form:
         self.url_args = UrlArgs.args2dict(args)
         self.eat_questions = eat_questions
         self.grade_questions = grade_questions
-        self.now = datetime.datetime.now()
+        self.now = datetime.datetime.now(pytz.timezone('Europe/Paris'))
         self._set_by_type('STORE_ID', storeId)
         self.soup['storeId'] = storeId
         self.url_args['storeId'] = storeId
