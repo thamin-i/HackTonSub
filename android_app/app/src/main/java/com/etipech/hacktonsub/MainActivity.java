@@ -38,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
         Long emailLong = System.currentTimeMillis() / 1000;
         String email = emailLong.toString();
         EditText email_input = findViewById(R.id.email_input);
-        EditText restaurant_input = findViewById(R.id.restaurant_input);
+        EditText storeNumber_input = findViewById(R.id.storeNumber_input);
+        EditText ticket_input = findViewById(R.id.ticket_input);
+        ticket_input.requestFocus();
         email = email + "@HackTonSub.com";
-        String restaurant = "53994";
+        String storeNumber = "53994";
         email_input.setText(email);
-        restaurant_input.setText(restaurant);
+        storeNumber_input.setText(storeNumber);
         final SeekBar mark_input = (SeekBar) findViewById(R.id.mark_input);
         final TextView mark_Value = findViewById(R.id.mark_value);
 
@@ -72,23 +74,46 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void postToApi(String email, String restaurant, String mark, Bitmap ticket) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ticket.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream .toByteArray();
-        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+    private void postToApi(String email, String storeNumber, String mark, String ticket) {
         Intent intent = new Intent(MainActivity.this, DoDoDoThePost.class);
         Bundle b = new Bundle();
         b.putString("email", email);
-        b.putString("restaurant", restaurant);
+        b.putString("storeNumber", storeNumber);
         b.putString("mark", mark);
-        b.putString("ticket", encoded);
+        b.putString("ticket", ticket);
         intent.putExtras(b);
-        //TODO finish();
+        finish();
         startActivity(intent);
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void take_picture(View v) {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
+            }
+/*            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
+            }*/
+        }
+        EditText email_input = findViewById(R.id.email_input);
+        EditText storeNumber_input = findViewById(R.id.storeNumber_input);
+        EditText ticket_input = findViewById(R.id.ticket_input);
+        SeekBar mark_input = findViewById(R.id.mark_input);
+        String email = email_input.getText().toString();
+        String ticket = ticket_input.getText().toString();
+        String storeNumber = storeNumber_input.getText().toString();
+        int mark = mark_input.getProgress();
+
+        postToApi(email, storeNumber, String.valueOf(mark), ticket);
+/*
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 1);
+        }
+        */
+    }
+
+    /*    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && null != data) {
             Bundle extras = data.getExtras();
@@ -106,21 +131,5 @@ public class MainActivity extends AppCompatActivity {
                 toaster("An error occured, please try again", Toast.LENGTH_SHORT);
             }
         }
-    }
-
-    public void take_picture(View v) {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 1);
-            }
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
-            }
-        }
-
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, 1);
-        }
-    }
+    }*/
 }
