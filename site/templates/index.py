@@ -31,7 +31,7 @@ def main():
       <input type="text" name="ticket" id="ticket" class="form-control" placeholder="ID" required autofocus>
       <label for="grade" class="sr-only">Mark</label>
       <p class="range-field">
-	<input value="10" type="range" id="grade" min="0" max="10" />
+	<input value="10" type="range" id="grade" name="grade" min="0" max="10" />
       </p>
       <div class="row">
 	<div class="col s6 push-s5">
@@ -39,43 +39,20 @@ def main():
 	</div>
       </div>
       <script>
-	$(function() {
-        $('#button').click(function() {
-        var formElements=document.getElementById("myForm").elements;
-        var _email="";
-        var _storeNumber="";
-        var _ticket="";
-        var _grade="";
-        for (var i=0; i < formElements.length; i++) {
-        if (formElements[i].name == "email")
-        _email = formElements[i].value;
-        if (formElements[i].name == "storeNumber")
-        _storeNumber = formElements[i].value;
-        if (formElements[i].name == "ticket")
-        _ticket = formElements[i].value;
-        if (formElements[i].name == "grade")
-        _grade = formElements[i].value;
-        }
-        $.ajax({
-        url: 'http://10.15.192.243:8080',
-        email: _email,
-        storeNumber: _storeNumber,
-        ticket: _ticket,
-        grade: _grade,
-        type: 'POST',
-        success: function(response) {
-        Materialize.toast('OK', 4000, 'green')
-        function show_popup(){
-        location.reload();
-        }
-        window.setTimeout( show_popup, 3000 );
-        },
-        error: function(error) {
-        Materialize.toast('KO', 4000, 'red')
-        }
-        });
-        });
-        });
+
+$(function() {
+$('#button').click(function() {
+      $.ajax ({
+      url:'http://10.15.192.243:4242',
+      data: $('form').serialize(),
+      type: 'POST',
+      success: function(response) {
+      console.log("finish")
+      },
+      error: function(response) {}
+      });
+});
+});
       </script>
     </form>
   </body>
@@ -84,3 +61,17 @@ def main():
 </html>
 """
     return ret
+
+  # $.ajax({
+  #       url: 'http://10.15.192.243:4242',
+  #       data: $('form').serializeArray(),
+  #       type: 'POST',
+  #       success: function(response) {
+  #       alert("OK")
+  #       },
+  #       error: function(error) {
+  #       alert("KO")
+  #       }
+  #       });
+  #       });
+  #       });
