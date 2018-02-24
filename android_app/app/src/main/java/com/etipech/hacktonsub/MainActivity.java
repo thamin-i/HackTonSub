@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void postToApi(String email, String restaurant, String mark, Bitmap ticket) {
-        String url = "www.hacktonsub.ovh";
+        String url = "10.15.192.243:8080";
         try {
             URL obj = new URL(url);
             HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
