@@ -47,42 +47,5 @@ public class DoDoDoThePost extends AppCompatActivity {
         });
 
         nwAsync.execute(email, restaurant, mark, ticket);
-//        doThePost(email, restaurant, mark, ticket);
     }
-
-    void doThePost(String email, String restaurant, String mark, String ticket){
-        System.out.println("TOutoyuzd");
-        try {
-            URL url = new URL("http://10.15.192.243:4242");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            //HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-
-            Uri.Builder builder = new Uri.Builder()
-                    .appendQueryParameter("email", email)
-                    .appendQueryParameter("restaurant", restaurant)
-                    .appendQueryParameter("mark", mark)
-                    .appendQueryParameter("ticket", ticket);
-
-            Log.e("DEBUG", "email=" + email + "&restaurant= " + restaurant + "&mark=" + mark + "&ticket=" + ticket.toString());
-
-            String query = builder.build().getEncodedQuery();
-
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            writer.write(query);
-            writer.flush();
-            writer.close();
-            os.close();
-
-            conn.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

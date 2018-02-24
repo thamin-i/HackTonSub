@@ -46,14 +46,10 @@ public class NetworkAsyncTask extends AsyncTask<String, Void, String> {
             Log.e("DEBUG", "email=" + email + "&restaurant= " + restaurant + "&mark=" + mark + "&ticket=" + ticket);
             String urlParameters = "email=" + email + "&restaurant= " + restaurant + "&mark=" + mark + "&ticket=" + ticket.toString();
             con.setDoOutput(true);
-            System.out.println("LA");
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            System.out.println("LA 0");
             wr.writeBytes(urlParameters);
-            System.out.println("LA 1");
             wr.flush();
             wr.close();
-            System.out.println("LA 2");
             int responseCode = con.getResponseCode();
             System.out.println("\nSending 'POST' request to URL : http://10.15.192.243:4242");
             System.out.println("Post parameters : " + urlParameters);

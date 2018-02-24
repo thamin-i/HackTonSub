@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void postToApi(String email, String restaurant, String mark, Bitmap ticket) {
-        System.out.println("J aime les poneys roses");
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ticket.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream .toByteArray();
@@ -85,50 +84,8 @@ public class MainActivity extends AppCompatActivity {
         b.putString("mark", mark);
         b.putString("ticket", encoded);
         intent.putExtras(b);
-        System.out.println("J aime beaucoup les poneys roses");
+        //TODO finish();
         startActivity(intent);
-        System.out.println("J aime tres tres beaucoup les poneys roses");
-        /*        System.out.println("POST TO API");
-        String url = "https://10.15.192.243:4242";
-//        String url = "https://www.google.com";
-        try {
-            System.out.println("toto tata");
-            URL obj = new URL(url);
-            System.out.println("ICI");
-            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
-            con.setRequestProperty("Accept-Language", "en-US,en; q=0.5");
-            Log.e("DEBUG", "email=" + email + "&restaurant= " + restaurant + "&mark=" + mark + "&ticket=" + ticket.toString());
-            String urlParameters = "email=" + email + "&restaurant= " + restaurant + "&mark=" + mark + "&ticket=" + ticket.toString();
-            con.setDoOutput(true);
-            System.out.println("LA");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            System.out.println("LA 0");
-            wr.writeBytes(urlParameters);
-            System.out.println("LA 1");
-            wr.flush();
-            wr.close();
-            System.out.println("LA 2");
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
-            System.out.println("Response Code : " + responseCode);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            System.out.println(response.toString());
-        } catch (IOException e) {
-            System.err.println("Error : " + e.getMessage());
-            toaster("Server currently unavailable", Toast.LENGTH_SHORT);
-        } catch (NetworkOnMainThreadException e){
-            System.err.println("JEAN MI");
-        }*/
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
