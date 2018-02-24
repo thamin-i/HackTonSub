@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-import io
-import base64
-import pyocr
-from PIL import Image
 from subway import ApiHandler
 from contextlib import closing
 from urllib.parse import parse_qs
@@ -32,4 +28,4 @@ class Serv(BaseHTTPRequestHandler):
         except Exception as e:
             self.send(repr(e), code=500)
 
-HTTPServer(('', 8080), Serv).serve_forever()
+HTTPServer(('', 5002), Serv).serve_forever()
