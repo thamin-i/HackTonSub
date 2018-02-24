@@ -18,6 +18,7 @@ class Serv(BaseHTTPRequestHandler):
             msg = msg.encode()
         self.send_response(code)
         self.send_header('Content-type', 'text/plain')
+        self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
         self.wfile.write(msg)
     def do_POST(self):
