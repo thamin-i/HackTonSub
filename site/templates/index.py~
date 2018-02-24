@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+
+import sys
+from flask import Flask, render_template, request, json, jsonify
+
+def main():
+    ret = """
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="icon" href="static/favicon.ico" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HackTonSub</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <nav>
+      <div class="nav-wrapper blue accent-4">
+	<a href="" class="brand-logo center">Hack Ton Sub</a>
+      </div>
+    </nav>
+    <form class="form-signin container center">
+      <label for="inputEmail" class="sr-only">Email Adress</label>
+      <input type="text" name="inputEmail" id="inputEmail" class="form-control" placeholder="email" required>
+      <label for="inputRestaurant" class="sr-only">Restaurant ID</label>
+      <input type="text" name="inputRestaurant" id="inputRestaurant" class="form-control" placeholder="ID" required>
+      <label for="inputTransaction" class="sr-only">Transaction ID</label>
+      <input type="text" name="inputTransaction" id="inputTransaction" class="form-control" placeholder="ID" required>
+      <label for="inputMark" class="sr-only">Mark</label>
+      <p class="range-field">
+	<input type="range" id="inputMark" min="0" max="5" />
+      </p>
+      <div class="row">
+	<div class="col s6 push-s5">
+    	  <button id="button" class="btn btn-lg btn-primary btn-block align-center blue accent-4" type="button">Get A Free Cookie</button>
+	</div>
+      </div>
+      <script>
+	$(function() {
+	$('#button').click(function() {
+        $.ajax({
+        url: 'https://www.hacktonhub.api.thamin.ovh',
+        data: $('form').serialize(),
+        type: 'POST',
+        success: function(response) {
+        Materialize.toast('Chan created', 3000, 'green')
+        function show_popup(){
+        location.reload();
+        };
+        window.setTimeout( show_popup, 3000 );
+        },
+        error: function(error) {
+	Materialize.toast('Chan cannot be created', 4000, 'red')
+	}
+        });
+	});
+	});
+      </script>
+    </form>
+  </body>
+  <footer>
+  </footer>
+</html>
+"""
