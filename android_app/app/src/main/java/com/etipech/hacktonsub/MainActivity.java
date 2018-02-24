@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -21,6 +22,41 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Long emailLong = System.currentTimeMillis() / 1000;
+        String email = emailLong.toString();
+        EditText email_input = findViewById(R.id.email_input);
+        EditText restaurant_input = findViewById(R.id.restaurant_input);
+        email = email + "@HackTonSub.com";
+        String restaurant = "53994";
+        email_input.setText(email);
+        restaurant_input.setText(restaurant);
+        final SeekBar mark_input = (SeekBar) findViewById(R.id.mark_input);
+        final TextView mark_Value = findViewById(R.id.mark_value);
+
+        mark_input.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                mark_Value.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+        });
+    }
 
     private void toaster(String message, int duration) {
         Context context = getApplicationContext();
@@ -59,20 +95,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             toaster("Server currently unavailable", Toast.LENGTH_SHORT);
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Long emailLong = System.currentTimeMillis() / 1000;
-        String email = emailLong.toString();
-        EditText email_input = findViewById(R.id.email_input);
-        EditText restaurant_input = findViewById(R.id.restaurant_input);
-        email = email + "@HackTonSub.com";
-        String restaurant = "53994";
-        email_input.setText(email);
-        restaurant_input.setText(restaurant);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
