@@ -12,7 +12,7 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <nav>
       <div class="nav-wrapper pink">
-	<a href="" class="brand-logo center">Hack Ton Sub</a>
+	<a href="" class="brand-logo center">Free Cookie</a>
       </div>
     </nav>
     <form name="myForm" id="myForm" class="form-signin container center">
@@ -28,21 +28,21 @@
       </p>
       <div class="row">
 	<div class="col s6 push-s5">
-    	  <button name="button" id="button" class="btn btn-lg btn-primary btn-block align-center pink" type="button">Get A Free Cookie</button>
+    	  <button name="button" id="button" class="btn btn-lg btn-primary btn-block align-center pink" type="button">Get Cookie</button>
 	</div>
       </div>
       <script>
 $(function() {
 $('#button').click(function() {
       $.ajax ({
-      url:'http://10.15.192.243:8080',
+      url:'https://hacktonsub.api.thamin.ovh',
       data: $('form').serializeArray(),
       type: 'POST',
       success: function(response) {
           Materialize.toast(response, 100000, 'green')
       },
       error: function(response) {
-          Materialize.toast("error", 3000, 'red')
+          Materialize.toast(response.responseText, 3000, 'red')
 }
       });
 });
